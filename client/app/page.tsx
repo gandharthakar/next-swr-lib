@@ -1,0 +1,72 @@
+'use client';
+
+import useSWR from "swr";
+import CreateUserForm from "./components/createUserForm";
+import UserList from "./components/userList";
+import HomePager from "./pagers/homePager";
+import Link from "next/link";
+import { UserGetAPIResp } from "./types/componentsInterfacesTypes";
+
+function capitalizeFirstLetter(string: string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const Page = () => {
+
+	const { data, error, isLoading, isValidating } = useSWR<UserGetAPIResp>('get-users', async () => {
+		let resp = await fetch('http://localhost:4825/get-users');
+		const data = await resp.json();
+		return data;
+	});
+
+	return (
+		<>
+			<div className="flex items-start flex-wrap">
+				<div className="min-h-[auto] mda-1:min-h-screen max-h-none mda-1:max-h-screen min-w-[auto] mda-1:min-w-[300px] w-full mda-1:w-auto overflow-y-auto border-b-[0px] mda-1:border-b-0 mda-1:border-r-[2px] border-solid border-zinc-800">
+					<div className="pb-[20px] p-[20px] border-b-[2px] border-solid border-zinc-800">
+						<CreateUserForm />
+					</div>
+					<HomePager />
+					<div className="p-[20px] text-right">
+						<Link
+							href="/another-page"
+							title="Another Page"
+							className="inline-block text-[14px] py-[8px] px-[15px] font-semibold bg-zinc-700 text-zinc-200 hover:bg-zinc-900">
+							Another Page
+						</Link>
+					</div>
+				</div>
+				<div className="w-full mda-1:flex-1">
+					{isLoading && (<div className="p-[20px]">
+						{error && (<div className="text-[14px] font-semibold text-red-600">There was an error.</div>)}
+						{isValidating && (<div className="text-[14px] font-semibold text-zinc-800">Revalidating ...</div>)}
+						<div className="text-[14px] font-semibold text-zinc-800">Loading ...</div>
+					</div>)}
+
+					{
+						data?.users.length ?
+							(
+								<>
+									{
+										data?.users.map((item: any) => (
+											<UserList
+												key={item._id}
+												user_id={item._id}
+												user_name={item.user_full_name}
+												user_gender={capitalizeFirstLetter(item.user_gender)}
+												user_gender_val={item.user_gender}
+											/>
+										))
+									}
+								</>
+							)
+							:
+							(<div className="text-[14px] font-semibold text-zinc-800">No Use Found.</div>)
+					}
+				</div>
+			</div>
+		</>
+	)
+};
+
+export default Page;
