@@ -6,13 +6,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserCompType } from "../types/componentsInterfacesTypes";
 import { useEffect } from "react";
 import { useEditUserStore } from "../zustand/store";
+import { useUpdateUser } from "../swr/mutations";
 
 const UpdateUserForm = (props: UserCompType) => {
+    const a = () => {
+        console.log('suc--mut --upd');
+    }
+    const b = () => {
+        console.log('err--mut  --upd');
+    }
+    const c = () => {
+        console.log('oerr--mut  --upd');
+    }
 
     const { user_id, user_name, user_gender, user_gender_val } = props;
 
     const isOpen = useEditUserStore((state) => state.toggleOpenState);
     const setPayload = useEditUserStore((state) => state.setData);
+
+    const { trigger, isMutating } = useUpdateUser({ successCB: a, errorCB: b, onErrorCB: c });
 
     const validationSchema = z.object({
         user_full_name: z.string({
@@ -40,12 +52,18 @@ const UpdateUserForm = (props: UserCompType) => {
     }
 
     const handleFormSubmit: SubmitHandler<validationSchema> = (formData) => {
-        console.log(formData);
+        trigger({
+            user_id,
+            user_full_name: formData.user_full_name,
+            user_gender: formData.user_gender
+        });
+        handleClose();
     }
 
     useEffect(() => {
         setValue("user_full_name", user_name);
         setValue("user_gender", user_gender_val ?? "");
+        //eslint-disable-next-line
     }, [user_id]);
 
     return (
@@ -107,7 +125,7 @@ const UpdateUserForm = (props: UserCompType) => {
                                 title="Create User"
                                 className="inline-block text-[14px] font-semibold border-[1px] py-[7px] px-[15px] border-solid border-zinc-800 focus:outline-0 bg-zinc-800 text-zinc-200"
                             >
-                                Update User
+                                {isMutating ? 'Creating...' : 'Update User'}
                             </button>
                         </div>
                     </form>

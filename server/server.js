@@ -7,7 +7,10 @@ const cors = require('cors');
 demo_api_mdb();
 const port = process.env.PORT || 4825;
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:4825", "http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"]
+}));
 app.use(express.json());
 
 app.post('/create-user', async (req, res) => {

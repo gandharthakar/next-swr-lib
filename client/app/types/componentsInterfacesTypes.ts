@@ -1,4 +1,15 @@
 
+export type UserCreType = {
+    user_full_name: string,
+    user_gender: string,
+}
+
+export type UserUpdType = {
+    user_id: string,
+    user_full_name: string,
+    user_gender: string,
+}
+
 export type UserCompType = {
     user_id: string,
     user_name: string,
@@ -8,9 +19,10 @@ export type UserCompType = {
 
 export type EditStoreType = {
     isEditPanelShown: boolean,
+    user_data: UserCompType,
     setData: (payload: UserCompType) => void,
     toggleOpenState: (payload: boolean) => void,
-} & UserCompType
+}
 
 export type APIRespCommonTypeA = {
     success: boolean,
@@ -26,3 +38,9 @@ export type UserAPIResp = {
 export type UserGetAPIResp = {
     users: UserAPIResp[]
 } & APIRespCommonTypeA
+
+export interface SWRCBtype {
+    successCB?: () => void,
+    errorCB?: () => void,
+    onErrorCB?: () => void,
+}

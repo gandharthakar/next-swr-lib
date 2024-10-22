@@ -1,23 +1,27 @@
 'use client';
 
-import useSWR from "swr";
 import CreateUserForm from "./components/createUserForm";
 import UserList from "./components/userList";
 import HomePager from "./pagers/homePager";
 import Link from "next/link";
-import { UserGetAPIResp } from "./types/componentsInterfacesTypes";
+import { useGetUsers } from "./swr/queries";
 
 function capitalizeFirstLetter(string: string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const Page = () => {
+	const a = () => {
+		console.log('suc--query');
+	}
+	const b = () => {
+		console.log('err--query');
+	}
+	const c = () => {
+		console.log('oerr--query');
+	}
 
-	const { data, error, isLoading, isValidating } = useSWR<UserGetAPIResp>('get-users', async () => {
-		let resp = await fetch('http://localhost:4825/get-users');
-		const data = await resp.json();
-		return data;
-	});
+	const { data, isLoading, error, isValidating, mutate } = useGetUsers({ successCB: a, errorCB: b, onErrorCB: c });
 
 	return (
 		<>
@@ -61,7 +65,7 @@ const Page = () => {
 								</>
 							)
 							:
-							(<div className="text-[14px] font-semibold text-zinc-800">No Use Found.</div>)
+							(<div className="p-[20px]"><div className="text-[14px] font-semibold text-zinc-800">No Use Found.</div></div>)
 					}
 				</div>
 			</div>

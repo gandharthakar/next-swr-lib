@@ -19,6 +19,8 @@
     &nbsp;
     <img src="https://lh3.googleusercontent.com/u/0/d/1_lfXDDp0ccOYTvOzx8GkUaA1e2ICDiM6=w1920-h847-iv1" width="80px" height="80px" alt="SWR" />
     &nbsp;
+    <img src="https://lh3.googleusercontent.com/u/0/d/1rbgc32lID9dkG7LXk014YI_a_Gy2joSK=w1920-h847-iv1" width="80px" height="80px" alt="Axios" />
+    &nbsp;
     <img src="https://lh3.googleusercontent.com/u/0/d/1O7BSc9cZou02JsWMYnGXwfeMlzxlDPFl=w1227-h847-iv1" width="80px" height="80px" alt="Zustand" />
     &nbsp;
     <img src="https://lh3.googleusercontent.com/u/0/d/1K3E3CVm9ouSwDOhN15u5UB0h6jcvLLdq=w1920-h953-iv1" width="80px" height="80px" alt="React Hook Form" />

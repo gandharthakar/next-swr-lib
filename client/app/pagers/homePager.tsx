@@ -6,10 +6,7 @@ import { useEditUserStore } from "../zustand/store";
 const HomePager = () => {
 
     const isOpen = useEditUserStore((state) => state.isEditPanelShown);
-    const uid = useEditUserStore((state) => state.user_id);
-    const unm = useEditUserStore((state) => state.user_name);
-    const ugn = useEditUserStore((state) => state.user_gender);
-    const ugnvl = useEditUserStore((state) => state.user_gender_val);
+    const udata = useEditUserStore((state) => state.user_data);
 
     return (
         <>
@@ -18,10 +15,10 @@ const HomePager = () => {
                     <>
                         <div className="border-b-0 mda-1:border-b-[2px] border-solid border-zinc-800">
                             <UpdateUserForm
-                                user_id={uid}
-                                user_name={unm}
-                                user_gender={ugn}
-                                user_gender_val={ugnvl}
+                                user_id={udata.user_id}
+                                user_name={udata.user_name}
+                                user_gender={udata.user_gender}
+                                user_gender_val={udata.user_gender_val}
                             />
                         </div>
                     </>

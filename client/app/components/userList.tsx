@@ -1,13 +1,25 @@
 'use client';
 
+import { useDeleteUser } from "../swr/mutations";
 import { UserCompType } from "../types/componentsInterfacesTypes";
 import { useEditUserStore } from "../zustand/store";
 
 const UserList = (props: UserCompType) => {
+    const a = () => {
+        console.log('suc--mut --del');
+    }
+    const b = () => {
+        console.log('err--mut  --del');
+    }
+    const c = () => {
+        console.log('oerr--mut  --del');
+    }
 
     const { user_id, user_name, user_gender, user_gender_val } = props;
     const setPayload = useEditUserStore((state) => state.setData);
     const isOpen = useEditUserStore((state) => state.toggleOpenState);
+
+    const { trigger, isMutating } = useDeleteUser({ successCB: a, errorCB: b, onErrorCB: c });
 
     const handleEdit = () => {
         setPayload({ user_id, user_name, user_gender, user_gender_val });
@@ -15,7 +27,7 @@ const UserList = (props: UserCompType) => {
     }
 
     const handleDelete = () => {
-
+        trigger({ user_id: user_id })
     }
 
     return (
@@ -46,7 +58,7 @@ const UserList = (props: UserCompType) => {
                         className="text-[12px] md:text-[14px] font-semibold text-red-600"
                         onClick={handleDelete}
                     >
-                        Delete
+                        {isMutating ? 'deleting...' : 'Delete'}
                     </button>
                 </div>
             </div>

@@ -3,8 +3,20 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateUser } from "../swr/mutations";
 
 const CreateUserForm = () => {
+    const a = () => {
+        console.log('suc--mut');
+    }
+    const b = () => {
+        console.log('err--mut');
+    }
+    const c = () => {
+        console.log('oerr--mut');
+    }
+
+    const { trigger, isMutating } = useCreateUser({ successCB: a, errorCB: b, onErrorCB: c });
 
     const validationSchema = z.object({
         user_full_name: z.string({
@@ -20,12 +32,16 @@ const CreateUserForm = () => {
 
     type validationSchema = z.infer<typeof validationSchema>;
 
-    const { register, handleSubmit, formState: { errors } } = useForm<validationSchema>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<validationSchema>({
         resolver: zodResolver(validationSchema)
     });
 
-    const handleFormSubmit: SubmitHandler<validationSchema> = (formData) => {
-        console.log(formData);
+    const handleFormSubmit: SubmitHandler<validationSchema> = async (formData) => {
+        trigger({
+            user_full_name: formData.user_full_name,
+            user_gender: formData.user_gender
+        });
+        reset();
     }
 
     return (
@@ -74,7 +90,7 @@ const CreateUserForm = () => {
                         title="Create User"
                         className="inline-block text-[14px] font-semibold border-[1px] py-[7px] px-[15px] border-solid border-zinc-800 focus:outline-0 bg-zinc-800 text-zinc-200"
                     >
-                        Create User
+                        {isMutating ? 'Updating...' : 'Create User'}
                     </button>
                 </div>
             </form>
