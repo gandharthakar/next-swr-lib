@@ -3,7 +3,7 @@ import { useGetUsers } from "./queries"
 import { createUser, updateUser, deleteUser } from "./api";
 import { SWRCBtype } from "../types/componentsInterfacesTypes";
 
-const mutateTimeDelay: number = 100;
+const mutateTimeDelay: number = 300;
 
 export const useCreateUser = (callbacks?: SWRCBtype) => {
     const { mutate } = useGetUsers();

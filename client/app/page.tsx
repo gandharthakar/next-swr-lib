@@ -21,7 +21,7 @@ const Page = () => {
 		console.log('oerr--query');
 	}
 
-	const { data, isLoading, error, isValidating, mutate } = useGetUsers({ successCB: a, errorCB: b, onErrorCB: c });
+	const { data, isLoading, error, isValidating, mutate } = useGetUsers({ successCB: a, errorCB: b, onErrorCB: c }, { enpg: true, pageIndex: 1, limit: 2 });
 
 	return (
 		<>
@@ -54,8 +54,8 @@ const Page = () => {
 									{
 										data?.users.map((item: any) => (
 											<UserList
-												key={item._id}
-												user_id={item._id}
+												key={item.id}
+												user_id={item.id}
 												user_name={item.user_full_name}
 												user_gender={capitalizeFirstLetter(item.user_gender)}
 												user_gender_val={item.user_gender}

@@ -30,17 +30,25 @@ export type APIRespCommonTypeA = {
 }
 
 export type UserAPIResp = {
-    _id: string,
+    id: string,
     user_full_name: string,
     user_gender: string,
 }
 
 export type UserGetAPIResp = {
-    users: UserAPIResp[]
+    users: UserAPIResp[],
+    totalPages?: number,
+    currentPage?: number
 } & APIRespCommonTypeA
 
 export interface SWRCBtype {
     successCB?: () => void,
     errorCB?: () => void,
     onErrorCB?: () => void,
+}
+
+export interface PaginationConfig {
+    enpg?: (boolean | undefined),
+    pageIndex?: (number | undefined),
+    limit?: (number | undefined)
 }

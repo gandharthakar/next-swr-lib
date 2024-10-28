@@ -87,10 +87,11 @@ const CreateUserForm = () => {
                 <div className="text-right">
                     <button
                         type="submit"
-                        title="Create User"
-                        className="inline-block text-[14px] font-semibold border-[1px] py-[7px] px-[15px] border-solid border-zinc-800 focus:outline-0 bg-zinc-800 text-zinc-200"
+                        title={isMutating ? 'Creating...' : 'Create User'}
+                        className="inline-block text-[14px] font-semibold border-[1px] py-[7px] px-[15px] border-solid border-zinc-800 focus:outline-0 bg-zinc-800 text-zinc-200 disabled:bg-zinc-400 disabled:border-zinc-400 disabled:pointer-events-none"
+                        disabled={isMutating}
                     >
-                        {isMutating ? 'Updating...' : 'Create User'}
+                        {isMutating ? 'Creating...' : 'Create User'}
                     </button>
                 </div>
             </form>

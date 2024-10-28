@@ -27,7 +27,10 @@ const UserList = (props: UserCompType) => {
     }
 
     const handleDelete = () => {
-        trigger({ user_id: user_id })
+        const conf = confirm("Are you sure want to delete this user ?");
+        if (conf) {
+            trigger({ user_id: user_id })
+        }
     }
 
     return (
